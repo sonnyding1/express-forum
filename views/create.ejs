@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+<%- include('partials/head') %>
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <div class="flex justify-center items-center w-screen py-8">
+        <form action="/posts" method="POST" class="form-control w-full max-w-xs center">
+            <label class="label">
+              <span class="label-text">Title</span>
+            </label>
+            <input type="text" name="title" placeholder="Type your title" class="input input-bordered input-sm w-full max-w-xs" />
+            <label class="label">
+                <span class="label-text">Content</span>
+            </label>
+            <textarea name="content" class="textarea textarea-bordered textarea-sm h-24" placeholder="Type your content"></textarea>
+            <button class="btn btn-block my-4">Submit</button>
+        </form>
+    </div>
+
+    
+
+    <%- include('partials/footer') %>
+</body>
+</html>
