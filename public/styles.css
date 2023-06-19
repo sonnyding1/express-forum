@@ -2896,6 +2896,10 @@ html {
   margin-bottom: 1rem;
 }
 
+.mb-16 {
+  margin-bottom: 4rem;
+}
+
 .flex {
   display: flex;
 }

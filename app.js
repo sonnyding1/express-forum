@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const Post = require('./models/post');
+const authRoutes = require('./routes/authRoutes');
+const postRoutes = require('./routes/postRoutes');
 
 // express app
 const app = express();
@@ -20,61 +21,20 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// serve static files
-app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.static(path.join(__dirname, 'public'))); // serve static files
+app.use(express.json());  // for the json data
 app.use(express.urlencoded({ extended: true }));  // for the form data
 
 app.get('/', (req, res) => {
     res.redirect('/posts');
 })
 
-app.get('/posts/create', (req, res) => {
-    res.render('create', { title: 'Create a new post' });
-})
+// auth routes
+app.use('/', authRoutes);
 
-app.get('/posts', (req, res) => {
-    Post.find().sort({ createdAt: -1})
-        .then((result) => {
-            res.render('index', { title: 'All posts', posts: result });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-})
-
-app.post('/posts', (req, res) => {
-    const post = new Post(req.body);
-    post.save()
-        .then((result) => {
-            res.redirect('/posts');
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-});
-
-app.get('/posts/:id', (req, res) => {
-    const id = req.params.id;
-    Post.findById(id)
-        .then((result) => {
-            res.render('details', { title: 'Post Details', post: result});
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-})
-
-app.delete('/posts/:id', (req, res) => {
-    const id = req.params.id;
-    Post.findByIdAndDelete(id)
-        .then(result => {
-            res.json({ redirect: '/posts' });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
+// post routes
+app.use('/posts', postRoutes);
 
 // 404 page
 app.use((req, res) => {

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+<%- include('partials/head') %>
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <div class="flex flex-col justify-center items-center w-screen py-8">
+        <h1 class="text-4xl mb-16">Log in</h1>
+
+        <form action="/login" method="POST" class="form-control w-full max-w-xs center">
+            <label class="label">
+              <span class="label-text">Username</span>
+            </label>
+            <input type="text" name="username" placeholder="Type your username" class="input input-bordered input-sm w-full max-w-xs" />
+            <label class="label">
+                <span class="label-text">Password</span>
+            </label>
+            <input type="password" name="password" class="input input-bordered input-sm w-full max-w-xs" />
+            <button class="btn btn-block my-4">Submit</button>
+        </form>
+    </div>
+
+    
+
+    <%- include('partials/footer') %>
+</body>
+</html>
