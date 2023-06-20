@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const authRoutes = require('./routes/authRoutes');
 const postRoutes = require('./routes/postRoutes');
+const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 
 // express app
 const app = express();
@@ -21,10 +23,12 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
+// middleware
 app.use(express.static(path.join(__dirname, 'public'))); // serve static files
 app.use(express.json());  // for the json data
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));  // for the form data
+app.get('*', checkUser);
 
 app.get('/', (req, res) => {
     res.redirect('/posts');

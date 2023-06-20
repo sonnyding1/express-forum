@@ -8,7 +8,9 @@
     <div class="flex justify-center items-center w-screen flex-col">
         <h1 class="text-4xl m-1"><%= post.title %></h1>
         <p><%= post.content %></p>
-        <button class="btn btn-outline">Delete</button>
+        <% if (user && post.username === user.username) { %>
+            <button class="btn btn-outline">Delete</button>
+        <% } %>
     </div>
 
     <%- include('partials/footer') %>

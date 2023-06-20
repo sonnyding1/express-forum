@@ -11,6 +11,7 @@
             <a href="/posts/<%= post._id %>" class="w-1/2 p-4 my-1 rounded-md border">
                 <h1 class="text-4xl m-1"><%= post.title %></h1>
                 <p><%= post.content %></p>
+                <p class="text-gray-500">by <%= post.username %></p>
             </a>
         <% }) %>
     </div>

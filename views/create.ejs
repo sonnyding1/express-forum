@@ -6,7 +6,7 @@
     <%- include('partials/navbar') %>
 
     <div class="flex justify-center items-center w-screen py-8">
-        <form action="/posts" method="POST" class="form-control w-full max-w-xs center">
+        <form method="POST" class="form-control w-full max-w-xs center">
             <label class="label">
               <span class="label-text">Title</span>
             </label>
@@ -22,5 +22,29 @@
     
 
     <%- include('partials/footer') %>
+
+    <script>
+        form = document.querySelector('form');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const title = form.title.value;
+            const content = form.content.value;
+            const username = '<%= user.username %>';
+
+            const res = await fetch('/posts', {
+                method: 'POST',
+                body: JSON.stringify({ title, content, username }),
+                headers: { 'Content-Type': 'application/json'}
+            })
+            const data = await res.json();
+            if (data.post) {
+                location.assign('/');
+            } else {
+                console.log(data);
+            }
+        });
+    </script>
 </body>
 </html>

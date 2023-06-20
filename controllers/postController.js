@@ -25,15 +25,23 @@ const post_create_get = (req, res) => {
     res.render('create', { title: 'Create a new post' });
 }
 
-const post_create_post = (req, res) => {
+const post_create_post = async (req, res) => {
     const post = new Post(req.body);
-    post.save()
-        .then((result) => {
-            res.redirect('/posts');
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    try{
+        const p = await post.save();
+        res.status(201).json({ post: p._id });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).json({ err });
+    }
+    // post.save()
+    //     .then((result) => {
+    //         res.redirect('/posts');
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
 }
 
 const post_delete = (req, res) => {
